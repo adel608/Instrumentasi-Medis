@@ -35,9 +35,6 @@ github: <!DOCTYPE html>
         const humSpan = document.getElementById('hum');
         const statusBtn = document.getElementById('statusBtn');
 
-        // Koneksi ke WebSockets HiveMQ (HTTPS Friendly)
-        const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
-
         client.on('connect', () => {
             console.log('Connected to MQTT Broker!');
             statusBtn.textContent = 'Online (Live Data)';
