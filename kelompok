@@ -30,7 +30,7 @@ github: <!DOCTYPE html>
 
     <script>
         // Topik harus persis sama dengan yang ditulis di kode Arduino ESP32
-        const topic = "kelompok_2/dht11"; 
+        const topic = "kelompok_2/DHT11"; 
 
         const tempSpan = document.getElementById('temp');
         const humSpan = document.getElementById('hum');
