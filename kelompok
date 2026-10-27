@@ -1,1 +1,69 @@
+github: <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESP32 Dashboard (Wi-Fi Realtime)</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background-color: #f4f4f9; }
+        .card { background: white; padding: 20px; border-radius: 10px; display: inline-block; box-shadow: 0px 4px 10px rgba(0,0,0,0.1); }
+        .status { font-weight: bold; padding: 8px 16px; border-radius: 5px; display: inline-block; color: white; margin-bottom: 15px; }
+        .status.connected { background-color: #28a745; }
+        .status.disconnected { background-color: #dc3545; }
+        .data-display { margin-top: 20px; font-size: 22px; }
+    </style>
+    <!-- Library MQTT via WebSockets -->
+    <script src="https://unpkg.com/mqtt/dist/mqtt.min.js"></script>
+</head>
+<body>
 
+    <div class="card">
+        <h1>ESP32 Kelompok Imut</h1>
+        <h4>Nagata Imelda Lorain</h4>
+        <div id="statusBtn" class="status disconnected">Connecting to Wi-Fi Server...</div>
+        
+        <div class="data-display">
+            <p>Temperature: <span id="temp">--</span> &deg;C</p>
+            <p>Humidity: <span id="hum">--</span> %</p>
+        </div>
+    </div>
+
+    <script>
+        // Topik harus persis sama dengan yang ditulis di kode Arduino ESP32
+        const topic = "kelompok_imut_nagata/ds18b20"; 
+
+        const tempSpan = document.getElementById('temp');
+        const humSpan = document.getElementById('hum');
+        const statusBtn = document.getElementById('statusBtn');
+
+        // Koneksi ke WebSockets HiveMQ (HTTPS Friendly)
+        const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
+
+        client.on('connect', () => {
+            console.log('Connected to MQTT Broker!');
+            statusBtn.textContent = 'Online (Live Data)';
+            statusBtn.className = 'status connected';
+            client.subscribe(topic);
+        });
+
+        client.on('message', (receivedTopic, message) => {
+            const value = message.toString();
+            console.log("Data diterima:", value);
+            
+            const parts = value.split(',');
+            if (parts.length >= 2) {
+                tempSpan.textContent = parts[0];
+                humSpan.textContent = parts[1];
+            } else {
+                tempSpan.textContent = value;
+            }
+        });
+
+        client.on('error', (err) => {
+            console.error('MQTT Error: ', err);
+            statusBtn.textContent = 'Connection Error';
+            statusBtn.className = 'status disconnected';
+        });
+    </script>
+</body>
+</html>
