@@ -18,8 +18,8 @@ github: <!DOCTYPE html>
 <body>
 
     <div class="card">
-        <h1>ESP32 Kelompok Imut</h1>
-        <h4>Nagata Imelda Lorain</h4>
+        <h1>ESP32 Kelompok 2</h1>
+        <h4>Adel Najmi Dziroh</h4>
         <div id="statusBtn" class="status disconnected">Connecting to Wi-Fi Server...</div>
         
         <div class="data-display">
@@ -30,7 +30,7 @@ github: <!DOCTYPE html>
 
     <script>
         // Topik harus persis sama dengan yang ditulis di kode Arduino ESP32
-        const topic = "kelompok_imut_nagata/ds18b20"; 
+        const topic = "kelompok_2/max30105"; 
 
         const tempSpan = document.getElementById('temp');
         const humSpan = document.getElementById('hum');
