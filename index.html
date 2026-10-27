@@ -1,4 +1,5 @@
-github: <!DOCTYPE html>
+github:
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -18,8 +19,9 @@ github: <!DOCTYPE html>
 <body>
 
     <div class="card">
-        <h1>ESP32 Kelompok 2</h1>
-        <h4>Adel Najmi Dziroh</h4>
+        <h1>ESP32 Kelompok Imut</h1>
+        <h4>Nagata Imelda Lorain</h4>
+        <div id="statusBtn" class="status disconnected">Connecting to Wi-Fi Server...</div>
         
         <div class="data-display">
             <p>Temperature: <span id="temp">--</span> &deg;C</p>
@@ -29,11 +31,14 @@ github: <!DOCTYPE html>
 
     <script>
         // Topik harus persis sama dengan yang ditulis di kode Arduino ESP32
-        const topic = "kelompok_2/max30105"; 
+        const topic = "kelompok_imut_nagata/ds18b20"; 
 
         const tempSpan = document.getElementById('temp');
         const humSpan = document.getElementById('hum');
         const statusBtn = document.getElementById('statusBtn');
+
+        // Koneksi ke WebSockets HiveMQ (HTTPS Friendly)
+        const client = mqtt.connect('wss://broker.hivemq.com:8884/mqtt');
 
         client.on('connect', () => {
             console.log('Connected to MQTT Broker!');
@@ -62,5 +67,4 @@ github: <!DOCTYPE html>
         });
     </script>
 </body>
-</html>
 </html>
